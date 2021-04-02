@@ -1,8 +1,10 @@
 import { employeelist} from "./modules/employeelist"
+import { general} from "./modules/general"
 export const routes = [
     {
         path: '/',
-        redirect:'/employee-list'
+        redirect:'/general'
     },
-    employeelist
+    employeelist,
+    general,
 ]
