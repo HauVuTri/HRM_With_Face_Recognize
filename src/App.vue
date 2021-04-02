@@ -7,6 +7,7 @@
       dark
       clipped-left
     >
+    <img src="~@/assets/images/hrm-logo.jpg" alt="" class="logo-app mx-3">
       <v-toolbar-title>Quản lý nhân sự</v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -30,24 +31,13 @@
       floating
       bottom
       hide-overlay
-      dark
       clipped
+      :transitionend="handleClick"
+      v-model="drawer"
+
     >
       <v-list dense nav class="py-0">
-        <!-- <v-list-item two-line :class="miniVariant && 'px-0'">
-          <v-list-item-avatar>
-            <img src="https://randomuser.me/api/portraits/men/81.jpg" />
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title>Application</v-list-item-title>
-            <v-list-item-subtitle>Subtext</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-divider></v-divider> -->
-
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item v-for="item in items" :key="item.title" link @click="handleClick(item)" :class="isCurrentTab(item)?'current-tab':''">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -60,11 +50,13 @@
     </v-navigation-drawer>
 
     <v-main>
-      <router-view />
+      <div class="main-wrap m-3">
+        <div class="h-100">
+        <router-view />
+
+        </div>
+      </div>
     </v-main>
-    <v-footer app>
-      <!-- -->
-    </v-footer>
   </v-app>
 </template>
 
@@ -79,13 +71,17 @@ export default {
   },
   data() {
     return {
-      drawer: true,
+      currentTab:'Tổng quan',
+      drawer: false,
       items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard" },
-        { title: "Photos", icon: "mdi-image" },
-        { title: "About", icon: "mdi-help-box" },
+        { title: "Tổng quan", icon: "mdi-view-dashboard" },
+        { title: "Lao động", icon: "mdi-image" },
+        { title: "Bổ nhiệm", icon: "mdi-help-box" },
+        { title: "Điểm danh", icon: "mdi-help-box" },
+        { title: "Nghỉ việc", icon: "mdi-help-box" },
+        { title: "Thiết lập", icon: "mdi-help-box" },
       ],
-      color: "primary",
+      color: "blue lighten-5",
       colors: ["primary", "blue", "success", "red", "teal"],
       right: false,
       permanent: true,
@@ -94,5 +90,41 @@ export default {
       background: false,
     };
   },
+  methods: {
+    isCurrentTab(tab){
+      if(tab.title == this.currentTab) return true;
+      return false
+    },
+    handleClick(e){
+      console.log(e);
+      switch (e.title) {
+        case "Tổng quan":
+          this.currentTab = e.title  ;
+          this.$router.push('/general')
+          break;
+        case "Lao động":
+          this.currentTab = e.title  ;
+          this.$router.push('/employee-list')
+          break;
+      
+        default:
+          break;
+      }
+    }
+  }
 };
 </script>
+<style scoped>
+.logo-app{
+  width:40px
+}
+.current-tab{
+  background-color: #B9F6CA
+;
+  /* background-color: red; */
+}
+.main-wrap{
+  border: 1px solid #ffffff;
+  border-radius:4px
+}
+</style>
