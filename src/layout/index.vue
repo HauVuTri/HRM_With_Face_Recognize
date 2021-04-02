@@ -29,7 +29,7 @@
       :transitionend="handleClick"
       v-model="drawer"
     >
-      <v-list dense nav class="py-0">
+      <v-list dense nav class="py-0 mt-4">
         <v-list-item
           v-for="item in items"
           :key="item.title"

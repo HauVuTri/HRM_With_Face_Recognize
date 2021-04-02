@@ -35,13 +35,14 @@
     <v-data-table
       height="calc(100vh - ( 225px ))"
       :headers="headers"
-      :items="desserts"
+      :items="lstEmployee"
       :items-per-page="15"
       class="elevation-1"
       :search="searchText"
       item-key="name"
       show-select
       v-model="lstSelectedTable"
+      :calculate-widths="true"
     ></v-data-table>
   </div>
 </template>
@@ -82,98 +83,46 @@ export default {
       },
       headers: [
         {
-          text: "Dessert (100g serving)",
-          align: "start",
+          text: "Mã nhân viên",
           sortable: false,
-          value: "name",
+          value: "EmployeeCode",
+          width:"150px",
+          align:'center',
         },
-        { text: "Calories", value: "calories" },
-        { text: "Fat (g)", value: "fat" },
-        { text: "Carbs (g)", value: "carbs" },
-        { text: "Protein (g)", value: "protein" },
-        { text: "Iron (%)", value: "iron" },
+        { text: "Họ và tên", value: "FullName",width:"100px",align:'center' },
+        { text: "Giới tính", value: "Gender",align:'center',width:"100px" },
+        { text: "Ngày sinh", value: "DateOfBirth",align:'center' },
+        { text: "ĐT di động", value: "CellPhone",align:'center' },
+        { text: "Email cơ quan", value: "OfficeEmail",align:'center' },
+        { text: "Vị trí công việc", value: "JobPosition",align:'center' },
+        { text: "Ngày thử việc", value: "ThuViecDay",align:'center' },
+        { text: "Ngày chính thức", value: "ChinhThucDay",align:'center' },
+        { text: "Loại hợp đồng", value: "ContractType",align:'center' },
+        { text: "Trạng thái lao động", value: "ContractStatus",align:'center' },
+        { text: "Ngày tham gia BHXH", value: "BXHHJoinDay",align:'center' },
+        { text: "Tỷ lệ đóng", value: "PaymentRate",align:'center' },
+        { text: "Số sổ BXHH", value: "SocialInsuranceBookNo",align:'center' },
+        { text: "Mã số BHXH", value: "SocialInsuranceCode",align:'center' },
       ],
-      desserts: [
+      lstEmployee: [
         {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%",
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%",
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%",
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%",
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%",
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%",
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%",
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%",
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%",
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%",
-        },
+          EmployeeCode:"EM001",
+          FullName:"Vũ Trí Hậu",
+          Gender:"Nam",
+          DateOfBirth:"26/08/1998",
+          CellPhone:"0984287005",
+          OfficeEmail:"vutrihau1@gmail.com",
+          JobPosition:"DEV",
+          ThuViecDay:"20/02/2021",
+          ChinhThucDay:"20/05/2021",
+          ContractType:"Chính thức",
+          ContractStatus:"Online",
+          BXHHJoinDay:"20/04/2015",
+          PaymentRate:5,
+          SocialInsuranceBookNo:"128312312",
+          SocialInsuranceCode:"12323002",
+          
+        }
       ],
     };
   },
