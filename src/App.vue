@@ -56,7 +56,9 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style lang="scss">
+@import "@/assets/style/app.scss";
+
 .logo-app {
   width: 40px;
 }
@@ -65,7 +67,7 @@ export default {
   /* background-color: red; */
 }
 .main-wrap {
-  border: 1px solid #ffffff;
+  // border: 1px solid #ffffff;
   border-radius: 4px;
 }
 </style>

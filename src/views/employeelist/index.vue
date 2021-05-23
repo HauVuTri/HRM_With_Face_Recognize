@@ -43,11 +43,15 @@
       show-select
       v-model="lstSelectedTable"
       :calculate-widths="true"
+      @dblclick:row="openLayoutEditEmployee "
+      @click:row="handleClick"
     ></v-data-table>
   </div>
 </template>
 
 <script>
+// import ServiceProvincial from "@/services/provincial.js"
+import ServiceEmployeeDetail from "@/services/employeedetail"
 export default {
   data() {
     return {
@@ -85,52 +89,50 @@ export default {
         {
           text: "Mã nhân viên",
           sortable: false,
-          value: "EmployeeCode",
+          value: "employeeCode",
           width:"150px",
           align:'center',
         },
-        { text: "Họ và tên", value: "FullName",width:"100px",align:'center' },
-        { text: "Giới tính", value: "Gender",align:'center',width:"100px" },
-        { text: "Ngày sinh", value: "DateOfBirth",align:'center' },
-        { text: "ĐT di động", value: "CellPhone",align:'center' },
-        { text: "Email cơ quan", value: "OfficeEmail",align:'center' },
+        { text: "Họ và tên", value: "fullName",width:"100px",align:'center' },
+        { text: "Giới tính", value: "gender",align:'center',width:"100px" },
+        { text: "Ngày sinh", value: "birthDay",align:'center' },
+        { text: "ĐT di động", value: "mobilePhone",align:'center' },
+        { text: "Email cơ quan", value: "officeEmail",align:'center' },
         { text: "Vị trí công việc", value: "JobPosition",align:'center' },
         { text: "Ngày thử việc", value: "ThuViecDay",align:'center' },
         { text: "Ngày chính thức", value: "ChinhThucDay",align:'center' },
         { text: "Loại hợp đồng", value: "ContractType",align:'center' },
         { text: "Trạng thái lao động", value: "ContractStatus",align:'center' },
-        { text: "Ngày tham gia BHXH", value: "BXHHJoinDay",align:'center' },
-        { text: "Tỷ lệ đóng", value: "PaymentRate",align:'center' },
-        { text: "Số sổ BXHH", value: "SocialInsuranceBookNo",align:'center' },
-        { text: "Mã số BHXH", value: "SocialInsuranceCode",align:'center' },
       ],
-      lstEmployee: [
-        {
-          EmployeeCode:"EM001",
-          FullName:"Vũ Trí Hậu",
-          Gender:"Nam",
-          DateOfBirth:"26/08/1998",
-          CellPhone:"0984287005",
-          OfficeEmail:"vutrihau1@gmail.com",
-          JobPosition:"DEV",
-          ThuViecDay:"20/02/2021",
-          ChinhThucDay:"20/05/2021",
-          ContractType:"Chính thức",
-          ContractStatus:"Online",
-          BXHHJoinDay:"20/04/2015",
-          PaymentRate:5,
-          SocialInsuranceBookNo:"128312312",
-          SocialInsuranceCode:"12323002",
-          
-        }
-      ],
+      lstEmployee: [],
     };
   },
-  created() {},
+  async created() {
+    let lstEmployee = await ServiceEmployeeDetail.GetAllEmployeedetails();
+    if (lstEmployee){
+      this.lstEmployee = lstEmployee;
+      console.log(lstEmployee);
+    }
+},
   methods: {
+    handleClick(data){
+      console.log(data)
+    },
     handleClickCreateEmployeeBtn() {
       this.$router.push("/employee-list/create");
     },
+    /**
+     * Mở giao diện chính sửa lao đọngo
+     */
+    openLayoutEditEmployee(mouseEvent,data){
+      console.log(data);
+      if (data && data.item){
+        let employeeSelectedToEdit = data.item
+        if(employeeSelectedToEdit && employeeSelectedToEdit.employeeDetailId){
+          this.$router.push(`/employee-list/edit/${employeeSelectedToEdit.employeeDetailId}`)
+        }
+      }
+    }
   },
 };
 </script>

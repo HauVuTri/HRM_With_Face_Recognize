@@ -86,6 +86,17 @@ export default {
       background: false,
     };
   },
+  created(){
+    //Check ở url nào để focus vào v-navigation-drawer
+    var currentUrl = window.location.pathname;
+    if (currentUrl.includes("/employee-list")){
+      this.currentTab =  "Lao động"
+    }
+    else if (currentUrl.includes("/general")){
+      this.currentTab =  "Tổng quan"
+    }
+
+  },
   methods: {
     isCurrentTab(tab) {
       if (tab.title == this.currentTab) return true;
@@ -119,7 +130,7 @@ export default {
   /* background-color: red; */
 }
 .main-wrap {
-  border: 1px solid #ffffff;
+  /* border: 1px solid #ffffff; */
   border-radius: 4px;
 }
 </style>

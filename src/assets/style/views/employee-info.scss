@@ -1,0 +1,36 @@
+.common-info{
+    background-color: #fff;
+    height: 150px;
+    min-height: 150px;
+    .sub-label{
+        font-size: 14px;
+    }
+    .sub-info{
+        font-size: 13px;;
+    }
+}
+.detail-info{
+    background-color: #e5e5e5;
+    border-radius: 4px;
+    height: calc(100% - (100px));
+    min-height: calc(100vh - (250px));
+    .big-title{
+        font-size: 18px;
+    }
+    .sub-title{
+        font-size: 16px;
+        font-weight: 600;
+    }
+    input{
+    width: 100%;
+    max-width: 400px;
+    height: 40px;
+    border: 1px solid #dadce3 !important;
+    border-radius: 4px  !important;
+    padding: 8px 16px;
+    &:focus{
+        outline: none !important;
+        border: 1px solid #2566e9 !important;
+    }
+}
+}
