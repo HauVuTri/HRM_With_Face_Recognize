@@ -23,22 +23,22 @@ div {
     background-color: #e5e5e5;
 }
 .m-48p {
-    margin: 48px;
+    margin: 48px !important;
 }
 .ml-48p {
-    margin-left: 48px;
+    margin-left: 48px !important;
 }
 .mr-48p {
-    margin-right: 48px;
+    margin-right: 48px !important;
 }
 .mt-48p {
-    margin-top: 48px;
+    margin-top: 48px !important;
 }
 .mb-48p {
-    margin-bottom: 48px;
+    margin-bottom: 48px !important;
 }
 .row {
-    margin: 0  !important;
+    margin: 0  !important ;
 }
 .mw-400p{
     max-width: 400px !important;
@@ -47,20 +47,31 @@ div {
 
 // size
 .fs14p{
-    font-size: 14px;
+    font-size: 14px !important;
 }
 .fs16p{
-    font-size: 16px;
+    font-size: 16px !important;
 }
 .fs18p{
-    font-size: 18px;
+    font-size: 18px !important;
 }
 .fs20p{
-    font-size: 20px;
+    font-size: 20px !important;
 }
 .fs22p{
-    font-size: 22px;
+    font-size: 22px !important;
 }
 .fs24p{
-    font-size: 24px;
+    font-size: 24px !important;
+}
+
+.invalid{
+    border: 1px solid red !important;
+}
+.error-msg{
+    color: red;
+}
+
+.cursor-pointer{
+    cursor: pointer !important;
 }

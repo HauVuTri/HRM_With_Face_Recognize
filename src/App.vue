@@ -4,7 +4,6 @@
 
 <script>
 // import HelloWorld from "./components/HelloWorld";
-
 export default {
   name: "App",
 
@@ -15,14 +14,7 @@ export default {
     return {
       currentTab: "Tổng quan",
       drawer: false,
-      items: [
-        { title: "Tổng quan", icon: "mdi-view-dashboard" },
-        { title: "Lao động", icon: "mdi-image" },
-        { title: "Bổ nhiệm", icon: "mdi-help-box" },
-        { title: "Điểm danh", icon: "mdi-help-box" },
-        { title: "Nghỉ việc", icon: "mdi-help-box" },
-        { title: "Thiết lập", icon: "mdi-help-box" },
-      ],
+      
       color: "blue lighten-5",
       colors: ["primary", "blue", "success", "red", "teal"],
       right: false,
@@ -33,26 +25,26 @@ export default {
     };
   },
   methods: {
-    isCurrentTab(tab) {
-      if (tab.title == this.currentTab) return true;
-      return false;
-    },
-    handleClick(e) {
-      console.log(e);
-      switch (e.title) {
-        case "Tổng quan":
-          this.currentTab = e.title;
-          this.$router.push("/general");
-          break;
-        case "Lao động":
-          this.currentTab = e.title;
-          this.$router.push("/employee-list");
-          break;
+    // isCurrentTab(tab) {
+    //   if (tab.title == this.currentTab) return true;
+    //   return false;
+    // },
+    // handleClick(e) {
+    //   console.log(e);
+    //   switch (e.title) {
+    //     case "Tổng quan":
+    //       this.currentTab = e.title;
+    //       this.$router.push("/general");
+    //       break;
+    //     case "Lao động":
+    //       this.currentTab = e.title;
+    //       this.$router.push("/employee-list");
+    //       break;
 
-        default:
-          break;
-      }
-    },
+    //     default:
+    //       break;
+    //   }
+    // },
   },
 };
 </script>

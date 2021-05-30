@@ -59,6 +59,7 @@
 </template>
 
 <script>
+// import { mdiAccountMultiple } from '@mdi/js';
 export default {
   name: "layout",
 
@@ -72,10 +73,8 @@ export default {
       items: [
         { title: "Tổng quan", icon: "mdi-view-dashboard" },
         { title: "Lao động", icon: "mdi-image" },
-        { title: "Bổ nhiệm", icon: "mdi-help-box" },
         { title: "Điểm danh", icon: "mdi-help-box" },
-        { title: "Nghỉ việc", icon: "mdi-help-box" },
-        { title: "Thiết lập", icon: "mdi-help-box" },
+        { title: "Chấm công", icon: "mdi-help-box" },
       ],
       color: "blue lighten-5",
       colors: ["primary", "blue", "success", "red", "teal"],
@@ -95,6 +94,12 @@ export default {
     else if (currentUrl.includes("/general")){
       this.currentTab =  "Tổng quan"
     }
+    else if (currentUrl.includes("/diem-danh")){
+      this.currentTab =  "Điểm danh"
+    }
+    else if (currentUrl.includes("/cham-cong")){
+      this.currentTab =  "Chấm công"
+    }
 
   },
   methods: {
@@ -113,6 +118,15 @@ export default {
           this.currentTab = e.title;
           this.$router.push("/employee-list");
           break;
+        case "Điểm danh":
+          this.currentTab = e.title;
+          this.$router.push("/diem-danh");
+          break;
+        case "Chấm công":
+          this.currentTab = e.title;
+          this.$router.push("/cham-cong");
+          break;
+       
 
         default:
           break;

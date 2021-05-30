@@ -14,6 +14,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueRouter from 'vue-router'
+import Vuelidate from 'vuelidate'
+import MixinApp from "@/mixins/appMixin"
 
 // font awesome
 library.add(faUserSecret)
@@ -23,6 +25,8 @@ Vue.config.productionTip = false
 window.$ =  window.jQuery = jQuery;
 Vue.use(VueRouter)
 Vue.use(Element)
+Vue.use(Vuelidate)
+Vue.mixin(MixinApp);
 new Vue({
   vuetify,
   router,

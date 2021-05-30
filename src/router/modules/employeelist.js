@@ -12,12 +12,12 @@ export const employeelist = {
         {
             path: "create",
             name: "CreateEmployee",
-            component: () => import("@/views/employeelist/detail_employee")
+            component: () => import("@/views/employeelist/employee_detail")
         },
         {
             path: "edit/:id",
             name: "EditEmployee",
-            component: () => import("@/views/employeelist/detail_employee")
+            component: () => import("@/views/employeelist/employee_detail")
         },
     ]
 

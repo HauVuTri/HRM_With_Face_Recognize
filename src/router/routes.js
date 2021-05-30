@@ -1,5 +1,7 @@
 import { employeelist} from "./modules/employeelist"
 import { general} from "./modules/general"
+import { rollcall} from "./modules/rollcall"
+import { timekeeping} from "./modules/timekeeping"
 export const routes = [
     {
         path: '/',
@@ -7,4 +9,6 @@ export const routes = [
     },
     employeelist,
     general,
+    rollcall,
+    timekeeping,
 ]

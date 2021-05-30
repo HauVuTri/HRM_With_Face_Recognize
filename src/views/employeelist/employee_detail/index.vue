@@ -7,7 +7,7 @@
             <v-avatar color="primary" size="56">{{getAvatarName(EmployeeInfo.fullName) || "NV"}}</v-avatar>
           </div>
           <div class="d-flex justify-content-center mt-2">
-            <div class="name sub-label fs16p" style="font-weight:500">{{EmployeeInfo.fullName || "Tên lao động"}}</div>
+            <div class="name sub-label fs20p" style="font-weight:500">{{EmployeeInfo.fullName || "Tên lao động"}}</div>
           </div>
           <div class="d-flex justify-content-center">
             <div class="employee-code-common sub-label">{{EmployeeInfo.employeeCode || "Mã lao động"}}</div>
@@ -55,10 +55,11 @@
             <div class="col-6">
               <div class="row">
                 <div class="col-4 d-flex align-items-center">
-                  <span>Mã nhân viên </span>
+                  <span >Mã nhân viên </span>
                 </div>
                 <div class="col-8">
-                  <input v-model="EmployeeInfo.employeeCode" type="text" />
+                  <input :class="!$v.EmployeeInfo.employeeCode.required && clickedSave?'invalid':''" v-model="EmployeeInfo.employeeCode" type="text" />
+                  <small class="text-danger" v-if="!$v.EmployeeInfo.employeeCode.required && clickedSave">{{msgValidate.requiredField}}</small>
                 </div>
               </div> 
               
@@ -67,7 +68,9 @@
                   <span>Họ và tên </span>
                 </div>
                 <div class="col-8">
-                  <input v-model="EmployeeInfo.fullName" type="text" />
+                  <!-- <input v-model="EmployeeInfo.fullName" type="text" /> -->
+                  <input  :class="!$v.EmployeeInfo.fullName.required && clickedSave?'invalid':''" v-model="$v.EmployeeInfo.fullName.$model" type="text" />
+                  <small class="text-danger" v-if="!$v.EmployeeInfo.fullName.required && clickedSave">{{msgValidate.requiredField}}</small>
                 </div>
               </div>
               <div class="row">
@@ -81,7 +84,6 @@
                     item-text="name"
                     item-value="id"
                     label="Chọn giới tính"
-                    return-object
                     single-line
                  ></v-select>
                   <!-- <input v-model="EmployeeInfo.gender" type="text" /> -->
@@ -373,7 +375,7 @@
                   <span>Email </span>
                 </div>
                 <div class="col-8">
-                  <input v-model="EmployeeInfo.Email" type="email" />
+                  <input  v-model="EmployeeInfo.email" type="email" />
                 </div>
               </div>
             </div>
@@ -383,15 +385,22 @@
                   <span>Email cơ quan </span>
                 </div>
                 <div class="col-8">
-                  <input v-model="EmployeeInfo.officeEmail" type="email" />
+                  <input  :class="!$v.EmployeeInfo.officeEmail.email?'invalid':''" v-model="EmployeeInfo.officeEmail" type="email" />
+                  <small class="text-danger" v-if="!$v.EmployeeInfo.officeEmail.email">
+                    {{msgValidate.emailFormat}}
+                  </small>
                 </div>
               </div>
+              
               <div class="row">
                 <div class="col-4 d-flex align-items-center">
                   <span>Email khác </span>
                 </div>
                 <div class="col-8">
-                  <input v-model="EmployeeInfo.otherEmail" type="email" />
+                  <input :class="!$v.EmployeeInfo.otherEmail.email?'invalid':''" v-model="EmployeeInfo.otherEmail" type="email" />
+                  <small class="text-danger" v-if="!$v.EmployeeInfo.otherEmail.email">
+                    {{msgValidate.emailFormat}}
+                  </small>
                 </div>
               </div>
               <div class="row">
@@ -433,12 +442,13 @@
                 </div>
                 <div class="col-8">
                   <v-combobox
-                    v-model="EmployeeInfo.residenceNationality"
+                    v-model="EmployeeInfo.residenceCountry"
                     :items="directoryData.nationalityData"
                     item-text="nationalityName"
                     item-value="nationalityName"
                     label="Chọn quốc tịch "
                     @select="handleSelectResidenceNationality"
+                    :return-object="false"
                   ></v-combobox>
                   <!-- <input
                     v-model="EmployeeInfo.ResidenceNationality"
@@ -452,12 +462,13 @@
                 </div>
                 <div class="col-8 mw-400p">
                  <v-combobox
-                    v-model="EmployeeInfo.residenceProvince"
+                    :value="EmployeeInfo.residenceProvince "
                     :items="directoryData.provincesData"
                     item-text="provincialName"
                     item-value="provincialName"
                     label="Chọn tỉnh/thành phố "
                     @change="handleSelectResidenceProvince"
+                    
                   ></v-combobox>
                 </div>
               </div>
@@ -472,7 +483,7 @@
                 </div>
                 <div class="col-8">
                   <v-combobox
-                    v-model="EmployeeInfo.residenceDistrict"
+                    :value="EmployeeInfo.residenceDistrict "
                     :items="directoryData.districtData"
                     item-text="districtName"
                     item-value="districtName"
@@ -488,11 +499,12 @@
                 </div>
                 <div class="col-8">
                   <v-combobox
-                    v-model="EmployeeInfo.residenceWard"
+                    :value="EmployeeInfo.residenceWard"
                     :items="directoryData.wardData"
                     item-text="wardName"
                     item-value="wardName"
                     label="Chọn Xã/Phường "
+                    @change="handleSelectResidenceWard"
                   ></v-combobox>
                 </div>
               </div>
@@ -579,18 +591,35 @@
         </button>
       </div>
     </div>
-    <v-alert
-      :type="typeAlert"
-      v-model="isShowAlert"
+    <div class="text-center">
+    <v-dialog
+      v-model="isShowDialog"
+      width="500"
     >
-    Thêm lao động thành công
-    </v-alert>
-    <v-banner
-      icon="$mdiAccount"
-      single-line
-      sticky
-      v-model="isShowAlert"
-    ></v-banner>
+      <v-card>
+        <v-card-title  class="headline grey lighten-2">
+          Thông báo
+        </v-card-title>
+
+        <v-card-text>
+          {{contentDialog}}
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="isShowDialog = false"
+          >
+            Đồng ý
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
   </div>
 </template>
 
@@ -599,6 +628,7 @@ import ServiceProvincial from "@/services/provincial"
 import ServiceEmployeeDetail from "@/services/employeedetail"
 import ServiceNationality from "@/services/nationality"
 import ServiceAdministrativeArea from "@/services/administrativearea"
+import { required,minLength,email } from 'vuelidate/lib/validators'
 export default {
   props: {
     // editDetail: {
@@ -607,6 +637,19 @@ export default {
   },
   data() {
     return {
+      /**
+       * Biến chứa các message validate
+       */
+      msgValidate:{
+        emailFormat:"Bạn cần nhập đúng định dạng email",
+        requiredField:"Trường này là trường bắt buộc"
+      },
+      contentDialog:"Lưu thông tin lao động thất bại. Vui lòng thử lại sau",
+      isShowDialog:false,
+      /**
+       * Đã click nút lưu hay chưa
+       */
+      clickedSave:false,
       /**
        * Kiểu của alert
        */
@@ -632,8 +675,8 @@ export default {
         wardData:[],
       },
       EmployeeInfo: {
-        fullName: "",
-        employeeCode: "",
+        fullName: null,
+        employeeCode: null,
         employeeDetailId: this.uuidv4(),
         gender: 1,
         birthDay: null,
@@ -697,6 +740,34 @@ export default {
         // false,
     };
   },
+  validations: {
+
+    EmployeeInfo:{
+      fullName:{
+        required,
+        minLength: minLength(4)
+      },
+      employeeCode:{
+        required,
+      },
+      email:{
+        email
+      },
+      officeEmail:{
+        email
+      },
+      otherEmail:{
+        email
+      }
+    },
+    // name: {
+    //   required,
+    //   minLength: minLength(4)
+    // },
+    // age: {
+    //   between: between(20, 30)
+    // }
+  },
   methods: {
     
     /**
@@ -714,28 +785,20 @@ export default {
       return data;
     },
     /**
-     * Chuyển từ datetime sang dạng iso time format 
+     * xử lý sau khi chọn xã(HỘ KHẨU THƯỜNG TRÚ)
      */
-    convertDateTimeToISOTime(datetimeString){
-      var dateReturn;
-      if(datetimeString){
-        dateReturn = new Date(datetimeString);
-        let day = dateReturn.getDate();
-        let month = dateReturn.getMonth() + 1;
-        let year = dateReturn.getFullYear();
-        console.log(`${year}/${month}/${day}`);
-        return `${year}-${month}-${day}`;
-
-      }
-      return null;
+    handleSelectResidenceWard(data){
+       if (data && data.districtName){
+         this.EmployeeInfo.residenceWard = data.districtName
+       }
     },
     /**
      * xử lý sau khi chọn tỉnh(HỘ KHẨU THƯỜNG TRÚ)
      */
     async handleSelectResidenceProvince(data){
-      console.log(data)
       try {
         if (data && data.provincialCode){
+          this.EmployeeInfo.residenceProvince = data.provincialName
           // gọi service lấy danh mục quận huyện theo tỉnh
           var res = await ServiceAdministrativeArea.getAdministrativeAreasByParentCode(1,data.provincialCode)
           if (res.code == 200){
@@ -756,6 +819,7 @@ export default {
       console.log(data)
       try {
         if (data && data.districtCode){
+          this.EmployeeInfo.residenceDistrict = data.districtName;
           // gọi service lấy danh mục quận huyện theo tỉnh
           var res = await ServiceAdministrativeArea.getAdministrativeAreasByParentCode(2,data.districtCode)
           if (res.code == 200){
@@ -770,6 +834,7 @@ export default {
       }
     },
     handleSelectResidenceNationality(){
+
 
     },
     /**
@@ -788,57 +853,92 @@ export default {
         return dataResonse;
       }
     },
-    convertISOTimeToDateTime(isotime){
-      // var dateReturn;
-      if(isotime){
-        return `${isotime}T07:00:00`
-      }
-      return null;
-    },
+    convertISOTimeToDateTime(isotime) {
+            // var dateReturn;
+            if (isotime) {
+                var date = new Date(isotime)
+                return date.toJSON();
+            }
+            return null;
+        },
     /**
-     * Hàm lấy tên avâtrr cho lao động
+     * Chuyển từ datetime sang dạng iso time format 
      */
-    getAvatarName(name){
-      var splited = name.split(" ");
-      var response = ""
-      splited.forEach(element => {
-        let firstChar = element.charAt(0).toUpperCase();
+    convertDateTimeToISOTime(datetimeString) {
+        var dateReturn;
+        console.log(1888887)
+        if (datetimeString) {
+            dateReturn = new Date(datetimeString);
+            let day = dateReturn.getDate();
+            let month = dateReturn.getMonth() + 1;
+            let year = dateReturn.getFullYear();
+            console.log(`${year}/${month}/${day}`);
+            return `${year}-${month}-${day}`;
 
-        if(firstChar){
-          response += firstChar;
         }
-      });
-      return response
+        return null;
+    },
+
+    getAvatarName(name){
+      if(name){
+        var splited = name.split(" ");
+        var response = ""
+        splited.forEach(element => {
+          let firstChar = element.charAt(0).toUpperCase();
+
+          if(firstChar){
+            response += firstChar;
+          }
+        });
+        return response
+        }
+      return null;
+      
     },
     /**
      * Validate dữ liệu trước khi lưu
      */
     validateDataBeforeSave(){
-
+      return this.$v.EmployeeInfo.fullName.required && this.$v.EmployeeInfo.employeeCode.required;
     },
     
     /**
      * Xử lý lưu lao động
      */
     async handleSaveEmployee() {
+      this.clickedSave = true;
       //Format data trước khi tiến hành save
       var dataSave = this.formatBeforeSave();
-      this.validateDataBeforeSave();
-      if (this.editMode){
+      var checkValidate = this.validateDataBeforeSave();
+      if (checkValidate){
+        console.log(checkValidate);
+        var res;
+        if (this.editMode){
 
-        var res = await ServiceEmployeeDetail.UpdateEmployee(dataSave);
-        console.log(res)
+          res = await ServiceEmployeeDetail.UpdateEmployee(dataSave);
+          console.log(res)
+          
+        }
+        else {
+          res = await ServiceEmployeeDetail.CreateEmployee(dataSave);
+          console.log(res)
+        }
+        if (!res){
+          this.isShowDialog = true;
+        }
+        else{
+          this.$router.push("/employee-list");
+        }
       }
-      else {
-        res = await ServiceEmployeeDetail.CreateEmployee(dataSave);
-        console.log(res)
-      }
+      
       
     },
     /**
      * Xử lý hủy bỏ
      */
-    handleCancle() {},
+    handleCancle() {
+      this.$router.push("/employee-list")
+    },
 
     /**
      * Chuyển ngày ở datepicker về dạng ngày tháng năm
@@ -859,6 +959,13 @@ export default {
     },
   },
   async created() {
+
+    //Lấy dữ liệu danh mục
+      //
+    this.directoryData.provincesData = await ServiceProvincial.Provincials();
+    this.directoryData.nationalityData = await ServiceNationality.GetAllNationalities();
+
+    //
     var currentURL = this.$route.path;
     console.log(currentURL);
     //Chế độ thêm mới
@@ -891,11 +998,52 @@ export default {
           // this.EmployeeInfo = infoEmp
         }
       }
+
+      /**
+       * Lấy danh mục quận/huyện theo tỉnh đã chọn(Nếu có)
+       */
+      if (this.EmployeeInfo && this.EmployeeInfo.residenceProvince){
+
+        //Tìm kiếm trong danh sách tỉnh xem tỉnh nào có cùng tên 
+        var sameProvince = this.directoryData.provincesData.find(x => x.provincialName == this.EmployeeInfo.residenceProvince)
+        //Nếu có tỉnh trùng
+        if(sameProvince){
+          // gọi service lấy danh mục quận huyện theo tỉnh
+          var res = await ServiceAdministrativeArea.getAdministrativeAreasByParentCode(1,sameProvince.provincialCode)
+          if (res.code == 200){
+            let lstHuyen = res.data
+            if (lstHuyen){
+              this.directoryData.districtData = lstHuyen
+            }
+          }
+
+        }
+      }
+
+      /**
+       * Lấy danh mục Xã/phường theo huyện đã có (Nếu có)
+       */
+      if (this.EmployeeInfo && this.EmployeeInfo.residenceDistrict){
+
+        //Tìm kiếm trong danh sách tỉnh xem tỉnh nào có cùng tên 
+        var sameDistrict = this.directoryData.districtData.find(x => x.districtName == this.EmployeeInfo.residenceDistrict)
+        //Nếu có huyện/quận trùng
+        if(sameDistrict){
+          // gọi service lấy danh mục quận huyện theo tỉnh
+          var resData = await ServiceAdministrativeArea.getAdministrativeAreasByParentCode(2,sameDistrict.districtCode)
+          if (resData.code == 200){
+            let lstXa = resData.data
+            if (lstXa){
+              this.directoryData.wardData = lstXa
+            }
+          }
+
+        }
+      }
+
     }
 
-    //
-    this.directoryData.provincesData = await ServiceProvincial.Provincials();
-    this.directoryData.nationalityData = await ServiceNationality.GetAllNationalities();
+  
 
   },
   mounted() {},
