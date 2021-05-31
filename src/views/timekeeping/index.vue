@@ -37,6 +37,7 @@
             </template>
             <v-date-picker
               v-model="monthSelectSearch"
+              locale="vi"
               type="month"
               @input="isShowDatePicker.monthSelectSearch = false"
               @change="handleChangeDatePicker"

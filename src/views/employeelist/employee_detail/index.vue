@@ -113,6 +113,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
+                      locale="vi"
                       v-model="EmployeeInfo.birthDay"
                       @input="isShowDatePicker.birthDay = false"
                     ></v-date-picker>
@@ -198,6 +199,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
+                      locale="vi"
                       v-model="EmployeeInfo.identityCardDate"
                       @input="isShowDatePicker.identityCardDate = false"
                     ></v-date-picker>
@@ -237,6 +239,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
+                      locale="vi"
                       v-model="EmployeeInfo.identityCardEndDate"
                       @input="isShowDatePicker.identityCardEndDate = false"
                     ></v-date-picker>
@@ -282,6 +285,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
+                      locale="vi"
                       v-model="EmployeeInfo.passportDate"
                       @input="isShowDatePicker.passportDate = false"
                     ></v-date-picker>
@@ -321,6 +325,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
+                      locale="vi"
                       v-model="EmployeeInfo.passportEndDate"
                       @input="isShowDatePicker.passportEndDate = false"
                     ></v-date-picker>

@@ -36,6 +36,7 @@
               ></v-text-field>
             </template>
             <v-date-picker
+              locale="vi"
               v-model="dateSelectSearch"
               @input="isShowDatePicker.dateSelectSearch = false"
               @change="handleChangeDatePicker"
